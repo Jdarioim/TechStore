@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Soporte - TechStore</title>
+    <style>
+       /* Menú lateral */
+      .menu-lateral {
+          position: fixed;
+          top: 0;
+          left: -100%;
+          width: 250px;
+          height: 100%;
+          background-color: white;
+          box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
+          transition: left 0.3s ease;
+          z-index: 1000;
+      }
+      .menu-lateral.open {
+          left: 0;
+      }
+
+      /* Fondo oscuro para el overlay */
+      .overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 900;
+      }
+      .overlay.open {
+          display: block;
+      }
+       .hero-img {
+            width: 100%; /* Ocupa el 100% del ancho */
+            height: auto; /* Mantiene la proporción de la imagen */
+            object-fit: contain; /* La imagen se ajusta al contenedor sin recortarse */
+        }
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+     <!-- Barra de navegación -->
+     <nav class="bg-blue-600 p-4 w-full flex justify-between items-center">
+        <h1><a href="index.html" class="text-white text-2xl font-bold">TechStore</a></h1>
+        <button id="menu-btn" class="block text-white text-3xl focus:outline-none md:hidden">
+            &#9776;
+        </button>
+        <ul class="hidden md:flex space-x-4">
+            <li><a href="index.html" class="text-white hover:text-gray-300">Inicio</a></li>
+            <li><a href="productos.html" class="text-white hover:text-gray-300">Productos</a></li>
+            <li><a href="ofertas.html" class="text-white hover:text-gray-300">Ofertas</a></li>
+            <li><a href="soporte.html" class="text-white hover:text-gray-300">Servicio técnico</a></li>
+            <li><a href="contacto.html" class="text-white hover:text-gray-300">Contacto</a></li>
+        </ul>
+    </nav>
+  
+    <!-- Menú Lateral -->
+    <div id="menu-lateral" class="menu-lateral">
+        <button id="close-btn" class="text-black text-2xl p-4">Close &times;</button>
+        <ul class="p-4 space-y-4">
+            <li><a href="index.html" class="text-black hover:text-gray-600">Inicio</a></li>
+            <li><a href="productos.html" class="text-black hover:text-gray-600">Productos</a></li>
+            <li><a href="ofertas.html" class="text-black hover:text-gray-600">Ofertas</a></li>
+            <li><a href="soporte.html" class="text-black hover:text-gray-600">Servicio técnico</a></li>
+            <li><a href="contacto.html" class="text-black hover:text-gray-600">Contacto</a></li>
+        </ul>
+        <div class="p-4">
+            <p class="text-sm text-gray-600">📞 0962047092</p>
+            <p class="text-sm text-gray-600">✉ ventas@TechStore.com</p>
+            <div class="flex space-x-2 mt-4">
+                <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Fondo Oscuro -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Hero con imagen -->
+    <div class="hero-container">
+        <img src="https://habilitamos.com/wp-content/uploads/2023/08/Habilitar-local-de-servicio-tecnico-para-celulares.jpg" alt="Soporte Técnico" class="hero-img">
+        <div class="hero-overlay"></div>
+        <div class="hero-text">
+            <h1 class="text-4xl font-bold">SOPORTE TÉCNICO</h1>
+            <p class="text-lg">Garantizamos la vida de tus equipos de comunicación</p>
+        </div>
+    </div>
+
+    <!-- Sección de Servicios -->
+    <section class="container mx-auto mt-8 p-8 bg-white shadow-md">
+        <h2 class="text-3xl font-bold text-center mb-6">Garantizamos la vida de tus equipos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Servicio a domicilio -->
+            <div class="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10.707 1.293a1 1 0 00-1.414 0L1.293 9.293a1 1 0 001.414 1.414L3 10.414V17a2 2 0 002 2h10a2 2 0 002-2v-6.586l.293.293a1 1 0 001.414-1.414l-8-8z" />
+                </svg>
+                <h3 class="text-xl font-semibold mt-4">Servicio a domicilio</h3>
+                <p class="text-gray-600">Nosotros lo vamos a ver, lo arreglamos en nuestro taller y te lo entregamos a domicilio.</p>
+            </div>
+
+            <!-- Ingreso del equipo -->
+            <div class="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v7a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm1 3a1 1 0 112 0v4a1 1 0 11-2 0V7zm6 0a1 1 0 112 0v4a1 1 0 11-2 0V7z" clip-rule="evenodd" />
+                </svg>
+                <h3 class="text-xl font-semibold mt-4">Ingreso del equipo</h3>
+                <p class="text-gray-600">Debemos llenar un formulario con tus datos personales y especificación del problema.</p>
+            </div>
+
+            <!-- Servicio Técnico -->
+            <div class="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm12 1a1 1 0 100 2h-2a1 1 0 000 2h2a1 1 0 100 2H6a1 1 0 100 2h6a1 1 0 000-2h-2a1 1 0 000-2h2a1 1 0 100-2z" clip-rule="evenodd" />
+                </svg>
+                <h3 class="text-xl font-semibold mt-4">Servicio Técnico</h3>
+                <p class="text-gray-600">Entrega del celular sin chip y sin forro, desinfectado y envuelto en papel dentro de una funda.</p>
+            </div>
+
+            <!-- Soluciones Técnicas -->
+            <div class="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-2-8a2 2 0 114 0 2 2 0 01-4 0z" clip-rule="evenodd" />
+                </svg>
+                <h3 class="text-xl font-semibold mt-4">Soluciones Técnicas</h3>
+                <p class="text-gray-600">La reparación del equipo dura entre 7 y 24 horas dependiendo del problema.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-600 text-white p-4 text-center mt-12">
+        <p>&copy; 2024 TechStore. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const menuLateral = document.getElementById('menu-lateral');
+        const overlay = document.getElementById('overlay');
+
+        menuBtn.addEventListener('click', () => {
+            menuLateral.classList.add('open');
+            overlay.classList.add('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            menuLateral.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+
+        overlay.addEventListener('click', () => {
+            menuLateral.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+
+    </script>
+
+</body>
+</html>

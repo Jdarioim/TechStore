@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Tienda de Tecnología</title>
+    <style>
+        /* Slider */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+        }
+        .active-slide {
+            display: block;
+        }
+
+        /* Menú lateral */
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+        .menu-lateral.open {
+            left: 0;
+        }
+
+        /* Fondo oscuro para el overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+        }
+        .overlay.open {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Barra de navegación -->
+    <nav class="bg-blue-600 p-4 w-full flex justify-between items-center">
+        <h1><a href="index.html" class="text-white text-2xl font-bold">TechStore</a></h1>
+        <button id="menu-btn" class="block text-white text-3xl focus:outline-none md:hidden">
+            &#9776;
+        </button>
+        <ul class="hidden md:flex space-x-4">
+            <li><a href="index.html" class="text-white hover:text-gray-300">Inicio</a></li>
+            <li><a href="productos.html" class="text-white hover:text-gray-300">Productos</a></li>
+            <li><a href="ofertas.html" class="text-white hover:text-gray-300">Ofertas</a></li>
+            <li><a href="soporte.html" class="text-white hover:text-gray-300">Servicio técnico</a></li>
+            <li><a href="contacto.html" class="text-white hover:text-gray-300">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Menú Lateral -->
+    <div id="menu-lateral" class="menu-lateral">
+        <button id="close-btn" class="text-black text-2xl p-4">Close &times;</button>
+        <ul class="p-4 space-y-4">
+            <li><a href="index.html" class="text-black hover:text-gray-600">Inicio</a></li>
+            <li><a href="productos.html" class="text-black hover:text-gray-600">Productos</a></li>
+            <li><a href="ofertas.html" class="text-black hover:text-gray-600">Ofertas</a></li>
+            <li><a href="soporte.html" class="text-black hover:text-gray-600">Servicio técnico</a></li>
+            <li><a href="contacto.html" class="text-black hover:text-gray-600">Contacto</a></li>
+        </ul>
+        <div class="p-4">
+            <p class="text-sm text-gray-600">📞 0962047092</p>
+            <p class="text-sm text-gray-600">✉ ventas@TechStore.com</p>
+            <div class="flex space-x-2 mt-4">
+                <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fondo Oscuro -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Slider -->
+    <section class="w-full mt-8 slider-container">
+        <div class="slide active-slide">
+            <img src="https://tienda.movistar.com.ec/media/wysiwyg/iPhone16desk_1.png" alt="Promoción 1" class="w-full h-64 object-contain">
+        </div>
+        <div class="slide">
+            <img src="https://juanmarcet.com/wp-content/uploads/2020/09/Banner_tecnologialdpi-1.png" alt="Promoción 2" class="w-full h-64 object-contain">
+        </div>
+        <div class="slide">
+            <img src="https://i.blogs.es/258cf5/diseno-sin-titulo-13-/1366_2000.png" alt="Promoción 3" class="w-full h-64 object-contain">
+        </div>
+        <!-- Botones de navegación -->
+        <button onclick="prevSlide()" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2">‹</button>
+        <button onclick="nextSlide()" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2">›</button>
+    </section>
+
+   
+
+    <!-- Sección de productos destacados -->
+    <section class="w-full p-8">
+        <h2 class="text-3xl font-bold mb-4">Nuestros Productos Destacados</h2>
+        
+       <!-- Tarjetas de productos -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Tarjeta 1 -->
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src="https://mobilestore.ec/wp-content/uploads/2024/09/iPhone-16-Pro-Desert-Titanium-Mobile-Store-Ecuador.jpg" alt="Producto 1" class="w-full h-48 object-contain">
+            <div class="p-4">
+                <h3 class="text-xl font-semibold">iPhone 16 Pro Max 512GB</h3>
+                <p class="text-gray-600">Lo mejor de apple con tecnología de punta</p>
+                <p class="text-lg font-bold text-blue-600">$1,999.99</p>
+                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Comprar</button>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src="https://think-ecuador.com/wp-content/uploads/2023/10/0160300790.jpeg" alt="Producto 2" class="w-full h-48 object-contain">
+            <div class="p-4">
+                <h3 class="text-xl font-semibold">iPhone 15 Pro Max 512GB</h3>
+                <p class="text-gray-600">Primer iPhone diseñado con titanio de calidad aeroespacial.</p>
+                <p class="text-lg font-bold text-blue-600">$1,799.99</p>
+                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Comprar</button>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src="https://mobilestore.ec/wp-content/uploads/2024/09/iPhone-16-Ultramarine-Mobile-Store-Ecuador.jpg" alt="Producto 3" class="w-full h-48 object-contain">
+            <div class="p-4">
+                <h3 class="text-xl font-semibold">iPhone 15 256GB</h3>
+                <p class="text-gray-600">Nuevo y elegante diseño en esta nueva generación.</p>
+                <p class="text-lg font-bold text-blue-600">$1,099.99</p>
+                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Comprar</button>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="bg-blue-600 text-white p-4 text-center">
+        <p>&copy; 2024 TechStore. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const menuLateral = document.getElementById('menu-lateral');
+        const overlay = document.getElementById('overlay');
+
+        menuBtn.addEventListener('click', () => {
+            menuLateral.classList.add('open');
+            overlay.classList.add('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            menuLateral.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+
+        overlay.addEventListener('click', () => {
+            menuLateral.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active-slide'));
+            slides[index].classList.add('active-slide');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        setInterval(nextSlide, 5000);
+    </script>
+
+</body>
+</html>
