@@ -35,6 +35,23 @@
             left: 0;
         }
 
+        /* Carrito lateral */
+        .cart-lateral {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0px 5px rgba(0,0,0,0.5);
+            transition: right 0.3s ease;
+            z-index: 1000;
+        }
+        .cart-lateral.open {
+            right: 0;
+        }
+
+
         /* Fondo oscuro para el overlay */
         .overlay {
             display: none;
@@ -54,8 +71,8 @@
 <body class="bg-gray-100">
 
     <!-- Barra de navegación -->
-    <nav class="bg-blue-600 p-4 w-full flex justify-between items-center">
-        <h1><a href="index.html" class="text-white text-2xl font-bold">TechStore</a></h1>
+    <nav class="bg-blue-600 p-4 w-full flex justify-start items-center">
+        <h1 class="mr-auto"><a href="index.html" class="text-white text-2xl font-bold">TechStore</a></h1>
         <button id="menu-btn" class="block text-white text-3xl focus:outline-none md:hidden">
             &#9776;
         </button>
@@ -65,7 +82,12 @@
             <li><a href="ofertas.html" class="text-white hover:text-gray-300">Ofertas</a></li>
             <li><a href="soporte.html" class="text-white hover:text-gray-300">Servicio técnico</a></li>
             <li><a href="contacto.html" class="text-white hover:text-gray-300">Contacto</a></li>
+            <li><button id="logout-button" class="text-white font-bold hover:bg-red-400">Cerrar sesión</button></li>  
         </ul>
+        <!-- Ícono de carrito -->
+        <button id="cart-btn" class="relative text-white text-2xl">
+            🛒<span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs">0</span>
+        </button>
     </nav>
 
     <!-- Menú Lateral -->
@@ -77,6 +99,7 @@
             <li><a href="ofertas.html" class="text-black hover:text-gray-600">Ofertas</a></li>
             <li><a href="soporte.html" class="text-black hover:text-gray-600">Servicio técnico</a></li>
             <li><a href="contacto.html" class="text-black hover:text-gray-600">Contacto</a></li>
+            <li><button id="logout-button" class="text-black hover:bg-red-400">Cerrar sesión</button></li> 
         </ul>
         <div class="p-4">
             <p class="text-sm text-gray-600">📞 0962047092</p>
@@ -125,43 +148,18 @@
     </section>
 
     <!-- Sección de Ofertas Destacadas -->
-<section class="w-full p-8">
+    <section class="w-full p-8">
     <h2 class="text-3xl font-bold text-center mb-8">Ofertas Destacadas</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Producto 1 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <img src="https://i0.wp.com/cemco.com.ec/wp-content/uploads/2024/06/GALAXY-AI-S24-PLUS.webp?fit=720%2C660&ssl=1" alt="Celular XYZ" class="w-full h-48 object-contain">
-            <h3 class="text-xl font-semibold mt-4">Samsung S24 Plus</h3>
-            <p class="text-gray-700 mt-2">El mejor celular con tecnología de punta.</p>
-            <p class="text-red-500 font-bold mt-2">¡30% de descuento!</p>
-            <p class="text-lg line-through text-gray-500">$1,199.99</p>
-            <p class="text-xl font-bold text-blue-600">$839.99</p>
-            <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-full">Comprar ahora</a>
-        </div>
-
-        <!-- Producto 2 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <img src="https://m.media-amazon.com/images/I/51euhq6i7fL._AC_SL1092_.jpg" alt="Galaxy Watch 6" class="w-full h-48 object-contain">
-            <h3 class="text-xl font-semibold mt-4">Galaxy Watch 6</h3>
-            <p class="text-gray-700 mt-2">Que la elegancia no te desconecte.</p>
-            <p class="text-red-500 font-bold mt-2">¡20% de descuento!</p>
-            <p class="text-lg line-through text-gray-500">$349.99</p>
-            <p class="text-xl font-bold text-blue-600">$279.99</p>
-            <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-full">Comprar ahora</a>
-        </div>
-
-        <!-- Producto 3 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <img src="https://cdsassets.apple.com/live/SZLF0YNV/images/sp/111863_airpods-3rdgen-2.png" alt="Audífonos Pro" class="w-full h-48 object-contain">
-            <h3 class="text-xl font-semibold mt-4">AirPods (3.ª generación)</h3>
-            <p class="text-gray-700 mt-2">Sonido de alta calidad.</p>
-            <p class="text-red-500 font-bold mt-2">¡15% de descuento!</p>
-            <p class="text-lg line-through text-gray-500">$179.99</p>
-            <p class="text-xl font-bold text-blue-600">$152.99</p>
-            <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-full">Comprar ahora</a>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="product-list"></div>
+    <!-- Carrito Lateral -->
+    <div id="cart-lateral" class="cart-lateral">
+        <button id="close-cart" class="text-black text-2xl p-4">Cerrar &times;</button>
+        <h3 class="text-xl font-bold p-4">Carrito de Compras</h3>
+        <div id="cart-items" class="p-4"></div>
+        <p id="total-price" class="font-bold p-4">Total: $0.00</p>
+        <button id="checkout-button" class="m-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Comprar</button>
     </div>
-</section>
+    </section>
 
 
     <!-- Pie de página -->
@@ -173,6 +171,9 @@
        const menuBtn = document.getElementById('menu-btn');
         const closeBtn = document.getElementById('close-btn');
         const menuLateral = document.getElementById('menu-lateral');
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCart = document.getElementById('close-cart');
+        const cartLateral = document.getElementById('cart-lateral');
         const overlay = document.getElementById('overlay');
 
         menuBtn.addEventListener('click', () => {
@@ -187,6 +188,16 @@
 
         overlay.addEventListener('click', () => {
             menuLateral.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+        
+        cartBtn.addEventListener('click', () => {
+            cartLateral.classList.add('open');
+            overlay.classList.add('open');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartLateral.classList.remove('open');
             overlay.classList.remove('open');
         });
        
@@ -211,6 +222,168 @@
         // Cambiar de slide automáticamente cada 5 segundos
         setInterval(nextSlide, 5000);
     </script>
+
+    <!-- Firebase SDK -->
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+
+   <!-- Script para verificar autenticación y cerrar sesión -->
+   <script type="module">
+     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+     import { getFirestore, collection, getDocs, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+     const firebaseConfig = {
+       apiKey: "AIzaSyAGnDr9i47yfWEYNLo0V68y-otgdqpMgA0",
+       authDomain: "practicaoctav.firebaseapp.com",
+       projectId: "practicaoctav",
+       storageBucket: "practicaoctav.appspot.com",
+       messagingSenderId: "153600882071",
+       appId: "1:153600882071:web:3bf7ea10ea2e5d966a40d2"
+     };
+ 
+     const app = initializeApp(firebaseConfig);
+     const auth = getAuth(app);
+     const db = getFirestore(app);
+
+ 
+     // Verificar si el usuario está autenticado
+     onAuthStateChanged(auth, (user) => {
+       if (!user) {
+         // Si no hay un usuario autenticado, redirigir a login.html
+         window.location.href = "login.html";
+       }
+     });
+ 
+     // Cerrar sesión
+     const logoutButton = document.getElementById("logout-button");
+     logoutButton.addEventListener("click", async () => {
+       try {
+         await signOut(auth);
+         alert("Has cerrado sesión.");
+         window.location.href = "login.html"; // Redirigir al login después de cerrar sesión
+       } catch (error) {
+         console.error("Error al cerrar sesión:", error);
+       }
+     });
+
+     let cart = [];
+
+        async function loadProducts() {
+            const productsCollection = collection(db, "oferts");
+            const productDocs = await getDocs(productsCollection);
+            const productList = document.getElementById("product-list");
+
+            productDocs.forEach(doc => {
+                const product = doc.data();
+                const productCard = document.createElement("div");
+                productCard.className = "bg-white shadow-lg rounded-lg overflow-hidden";
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-contain">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">${product.name}</h3>
+                        <p class="text-gray-600">${product.description}</p>
+                        <p class="text-red-500 font-bold mt-2">${product.desc}</p>
+                        <p class="text-lg line-through text-gray-500">${product.pric}</p>
+                        <p class="text-lg font-bold text-blue-600">$${product.price}</p>
+                        <p class="text-sm text-gray-500">Stock disponible: ${product.stock}</p>  <!-- Agregamos aquí el stock -->
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" 
+                            onclick="addToCart('${doc.id}', ${product.stock}, '${product.name}', ${product.price})">
+                            Agregar al Carrito
+                        </button>
+                    </div>
+                `;
+                productList.appendChild(productCard);
+            });
+        }
+
+        window.addToCart = function(productId, stock, productName, productPrice) {
+    const productInCart = cart.find(item => item.id === productId);
+    if (productInCart) {
+        alert("Este producto ya está en el carrito.");
+        return;
+    }
+    if (stock > 0) {
+        cart.push({ id: productId, name: productName, price: productPrice });
+        updateCart();
+    } else {
+        alert("No hay suficiente stock disponible.");
+    }
+};
+
+// Función para abrir el carrito
+cartBtn.addEventListener('click', () => {
+    cartLateral.classList.add('open');
+    overlay.classList.add('open');
+});
+
+// Función para cerrar el carrito
+closeCart.addEventListener('click', () => {
+    cartLateral.classList.remove('open');
+    overlay.classList.remove('open');
+});
+
+overlay.addEventListener('click', () => {
+    cartLateral.classList.remove('open');
+    overlay.classList.remove('open');
+});
+
+        function addToCart(productId, productName, productPrice) {
+        const productInCart = cart.find(item => item.id === productId);
+        if (!productInCart) {
+            cart.push({ id: productId, name: productName, price: productPrice });
+            updateCart();
+        } else {
+            alert("Este producto ya está en el carrito.");
+        }
+    }
+    
+    //actualizar carrito
+    function updateCart() {
+        const cartItemsDiv = document.getElementById("cart-items");
+        cartItemsDiv.innerHTML = '';
+        let totalPrice = 0;
+
+        cart.forEach(item => {
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "flex justify-between mb-2";
+            itemDiv.innerHTML = `${item.name} - $${item.price}`;
+            cartItemsDiv.appendChild(itemDiv);
+            totalPrice += item.price;
+        });
+
+        document.getElementById("total-price").innerText = `Total: $${totalPrice.toFixed(2)}`;
+        document.getElementById("cart-count").innerText = cart.length;
+    }
+
+    document.getElementById("checkout-button").addEventListener("click", async () => {
+                if (cart.length === 0) {
+                    alert("Tu carrito está vacío.");
+                    return;
+                }
+        
+                for (const item of cart) {
+                    const productDoc = doc(db, "oferts", item.id);
+                    const productSnapshot = await getDoc(productDoc);
+                    const productData = productSnapshot.data();
+        
+                    if (productData.stock > 0) {
+                        await updateDoc(productDoc, { stock: productData.stock - 1 });
+                    } else {
+                        alert(`No hay suficiente stock para ${item.name}.`);
+                        return;
+                    }
+                }
+                
+                alert("Compra realizada con éxito.");
+                cart = [];
+                updateCart();
+            });
+
+    loadProducts();
+
+   </script>
 
 </body>
 </html>

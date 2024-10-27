@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white">
+
+<main class="flex min-h-screen items-center justify-center">
+  <section class="flex w-[30rem] flex-col space-y-6">
+    <div class="text-center text-4xl font-medium">Register</div>
+
+    <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+      <input id="register-name" type="text" placeholder="Nombre" class="w-full bg-transparent outline-none placeholder:italic focus:outline-none">
+    </div>
+
+    <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+      <input id="register-email" type="text" placeholder="Email" class="w-full bg-transparent outline-none placeholder:italic focus:outline-none">
+    </div>
+
+    <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+      <input id="register-password" type="password" placeholder="Password" class="w-full bg-transparent outline-none placeholder:italic focus:outline-none">
+    </div>
+
+    <button id="register-button" class="rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400">
+      REGISTRARSE
+    </button>
+
+    <p class="text-center">¿Ya tienes una cuenta? 
+      <a href="login.html" class="text-indigo-400 underline">Inicia sesión</a>
+    </p>
+  </section>
+</main>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+
+<!-- Script para registrar usuario -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAGnDr9i47yfWEYNLo0V68y-otgdqpMgA0",
+    authDomain: "practicaoctav.firebaseapp.com",
+    projectId: "practicaoctav",
+    storageBucket: "practicaoctav.appspot.com",
+    messagingSenderId: "153600882071",
+    appId: "1:153600882071:web:3bf7ea10ea2e5d966a40d2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const registerButton = document.getElementById("register-button");
+
+  // Registro de nuevo usuario
+  registerButton.addEventListener("click", async () => {
+    const name = document.getElementById("register-name").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      alert("Usuario registrado exitosamente");
+      window.location.href = "login.html"; // Redirecciona al login
+    } catch (error) {
+      console.error("Error al registrar usuario:", error);
+      alert("Error en el registro. Verifica los datos ingresados.");
+    }
+  });
+</script>
+</body>
+</html>

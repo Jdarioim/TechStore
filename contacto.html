@@ -53,6 +53,7 @@
           <li><a href="ofertas.html" class="text-white hover:text-gray-300">Ofertas</a></li>
           <li><a href="soporte.html" class="text-white hover:text-gray-300">Servicio técnico</a></li>
           <li><a href="contacto.html" class="text-white hover:text-gray-300">Contacto</a></li>
+          <li><button id="logout-button" class="text-white font-bold hover:bg-red-400">Cerrar sesión</button></li>  
       </ul>
   </nav>
 
@@ -65,7 +66,8 @@
           <li><a href="ofertas.html" class="text-black hover:text-gray-600">Ofertas</a></li>
           <li><a href="soporte.html" class="text-black hover:text-gray-600">Servicio técnico</a></li>
           <li><a href="contacto.html" class="text-black hover:text-gray-600">Contacto</a></li>
-      </ul>
+          <li><button id="logout-button" class="text-black hover:bg-red-400">Cerrar sesión</button></li> 
+        </ul>
       <div class="p-4">
         <p class="text-sm text-gray-600">📞 0962047092</p>
         <p class="text-sm text-gray-600">✉ ventas@TechStore.com</p>
@@ -133,6 +135,48 @@
       });
 
   </script>
+
+   <!-- Firebase SDK -->
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+ 
+   <!-- Script para verificar autenticación y cerrar sesión -->
+   <script type="module">
+     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+ 
+     const firebaseConfig = {
+       apiKey: "AIzaSyAGnDr9i47yfWEYNLo0V68y-otgdqpMgA0",
+       authDomain: "practicaoctav.firebaseapp.com",
+       projectId: "practicaoctav",
+       storageBucket: "practicaoctav.appspot.com",
+       messagingSenderId: "153600882071",
+       appId: "1:153600882071:web:3bf7ea10ea2e5d966a40d2"
+     };
+ 
+     const app = initializeApp(firebaseConfig);
+     const auth = getAuth(app);
+ 
+     // Verificar si el usuario está autenticado
+     onAuthStateChanged(auth, (user) => {
+       if (!user) {
+         // Si no hay un usuario autenticado, redirigir a login.html
+         window.location.href = "login.html";
+       }
+     });
+ 
+     // Cerrar sesión
+     const logoutButton = document.getElementById("logout-button");
+     logoutButton.addEventListener("click", async () => {
+       try {
+         await signOut(auth);
+         alert("Has cerrado sesión.");
+         window.location.href = "login.html"; // Redirigir al login después de cerrar sesión
+       } catch (error) {
+         console.error("Error al cerrar sesión:", error);
+       }
+     });
+   </script>
 
 </body>
 </html>
